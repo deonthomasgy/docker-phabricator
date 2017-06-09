@@ -2,16 +2,6 @@ docker-phabricator
 ==================
 
 A docker composition for Phabricator :
-- One container used by mysql, see https://github.com/yesnault/docker-phabricator/tree/master/database
-- One container used by apache (phabricator)
-
-Run a mysql container :
-```
-docker run --name databasePhabricator yesnault/docker-phabricator-mysql
-```
-
-Run phabricator :
-```
-docker run -p 8081:80 --link databasePhabricator:database yesnault/docker-phabricator 
-```
-Go to http://localhost:8081
+    docker build -t phabricator:latest https://github.com/deonthomasgy/docker-phabricator.git
+You will need to link with a db
+    docker run --name thomas-phab -e MYSQL_USER=root -e MYSQL_PASS='' -e MYSQL_HOST=localhost -d -d phabricator:latest

@@ -46,6 +46,12 @@ RUN     bash download.sh arcanist    $ARCANIST_COMMIT
 RUN     bash download.sh libphutil   $LIBPHUTIL_COMMIT
 
 COPY    preamble.php /opt/phabricator/support/preamble.php
+
+# Setup PHPExcel
+WORKDIR /opt/phabricator/externals
+curl -L https://github.com/PHPOffice/PHPExcel/archive/1.8.1.tar.gz | tar -xzf - 
+
+WORKDIR /opt
 # Setup apache
 RUN     a2enmod rewrite
 ADD     phabricator.conf /etc/apache2/sites-available/phabricator.conf

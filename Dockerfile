@@ -49,7 +49,7 @@ COPY    preamble.php /opt/phabricator/support/preamble.php
 
 # Setup PHPExcel
 WORKDIR /opt/phabricator/externals
-curl -L https://github.com/PHPOffice/PHPExcel/archive/1.8.1.tar.gz | tar -xzf - 
+RUN curl -L https://github.com/PHPOffice/PHPExcel/archive/1.8.1.tar.gz | tar -xzf - 
 
 WORKDIR /opt
 # Setup apache

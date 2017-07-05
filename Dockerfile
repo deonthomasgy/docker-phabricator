@@ -8,7 +8,7 @@ MAINTAINER  Deon Thomas <deon.thomas.gy@gmail.com>
 ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
 # TODO: review this dependency list
-RUN     apt-get clean && apt-get update && apt-get install -y \
+RUN     apt-get update && apt-get install -y \
 	        git \
             apache2 \
             curl \

@@ -15,7 +15,7 @@ else
 fi
 
 if [ "${1}" = "start-server" ]; then
-  exec bash -c "/opt/phabricator/bin/storage upgrade --force; /opt/phabricator/bin/phd start; source /etc/apache2/envvars; /usr/sbin/apache2 -DFOREGROUND"
+  exec bash -c "/opt/phabricator/bin/storage upgrade --force; /opt/phabricator/bin/phd start; source /etc/apache2/envvars; /usr/sbin/apache2 -DBACKGROUND; node --max-old-space-size=256 -- /opt/phabricator/support/aphlict/server/aphlict_server.js --config=/opt/phabricator/conf/aphlict/aphlict.custom.json"
 else
   exec $@
 fi

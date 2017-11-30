@@ -30,6 +30,8 @@ RUN     apt-get update && apt-get install -y \
             subversion \
             tar \
             sudo \
+            nodejs \
+            nodejs-legacy \
         && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # For some reason phabricator doesn't have tagged releases. To support
@@ -49,7 +51,7 @@ COPY    preamble.php /opt/phabricator/support/preamble.php
 
 # Setup PHPExcel
 WORKDIR /opt/phabricator/externals
-RUN curl -L https://github.com/PHPOffice/PHPExcel/archive/1.8.1.tar.gz | tar -xzf - 
+RUN curl -L https://github.com/PHPOffice/PHPExcel/archive/1.8.1.tar.gz | tar -xzf -
 
 WORKDIR /opt
 # Setup apache
@@ -72,9 +74,23 @@ RUN     ln -s /usr/lib/git-core/git-http-backend /opt/phabricator/support/bin
 RUN     /opt/phabricator/bin/config set phd.user "root"
 RUN     echo "www-data ALL=(ALL) SETENV: NOPASSWD: /opt/phabricator/support/bin/git-http-backend" >> /etc/sudoers
 
+RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+RUN apt-get install nodejs=9.2.0-1nodesource1 -y
+
+RUN cd phabricator/support/aphlict/server/ && \
+    npm install ws@2.x && \
+    groupadd -r app -g 433 && \
+    mkdir /home/app && \
+    useradd -u 431 -r -g app -d /home/app -s /sbin/nologin -c "Docker image user for server" app && \
+    touch /var/run/aphlict.pid /var/log/aphlict.log && \
+    chown app:app /home/app /var/run/aphlict.pid /var/log/aphlict.log
+
+COPY aphlict.custom.json /opt/phabricator/conf/aphlict/
+
 WORKDIR /opt/phabricator
 
-EXPOSE  80
+EXPOSE  80 22280
+
 ADD     entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD     ["start-server"]

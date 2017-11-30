@@ -73,7 +73,7 @@ RUN     /opt/phabricator/bin/config set phd.user "root"
 RUN     echo "www-data ALL=(ALL) SETENV: NOPASSWD: /opt/phabricator/support/bin/git-http-backend" >> /etc/sudoers
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-RUN apt-get install nodejs=9.2.0-1nodesource1 -y
+RUN apt-get install nodejs=9.* -y
 
 RUN cd phabricator/support/aphlict/server/ && \
     npm install ws@2.x && \

@@ -8,7 +8,6 @@ MAINTAINER  Deon Thomas <deon.thomas.gy@gmail.com>
 ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
 # TODO: review this dependency list
-RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 RUN     apt-get update && apt-get install -y \
 	        git \
             apache2 \
@@ -31,7 +30,6 @@ RUN     apt-get update && apt-get install -y \
             subversion \
             tar \
             sudo \
-            nodejs=9.2.0-1nodesource1 \
         && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # For some reason phabricator doesn't have tagged releases. To support
@@ -73,6 +71,9 @@ RUN     sed -e 's/post_max_size =.*/post_max_size = 32M/' \
 RUN     ln -s /usr/lib/git-core/git-http-backend /opt/phabricator/support/bin
 RUN     /opt/phabricator/bin/config set phd.user "root"
 RUN     echo "www-data ALL=(ALL) SETENV: NOPASSWD: /opt/phabricator/support/bin/git-http-backend" >> /etc/sudoers
+
+RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+RUN apt-get install nodejs=9.2.0-1nodesource1 -y
 
 RUN cd phabricator/support/aphlict/server/ && \
     npm install ws@2.x && \

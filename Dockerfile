@@ -36,9 +36,9 @@ RUN     apt-get update && apt-get install -y \
 # repeatable builds use the latest SHA
 ADD     download.sh /opt/download.sh
 
-ARG PHABRICATOR_COMMIT=490636475
-ARG ARCANIST_COMMIT=dcd7ef6
-ARG LIBPHUTIL_COMMIT=1ad4249
+ARG PHABRICATOR_COMMIT=cc69bed52
+ARG ARCANIST_COMMIT=b4ba68b
+ARG LIBPHUTIL_COMMIT=47c97f0
 
 WORKDIR /opt
 RUN     bash download.sh phabricator $PHABRICATOR_COMMIT

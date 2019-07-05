@@ -2,7 +2,7 @@
 # Docker image for running https://github.com/phacility/phabricator
 #
 
-FROM    debian:jessie
+FROM    debian:jessie-20190610
 MAINTAINER  Deon Thomas <deon.thomas.gy@gmail.com>
 
 ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
@@ -36,9 +36,9 @@ RUN     apt-get update && apt-get install -y \
 # repeatable builds use the latest SHA
 ADD     download.sh /opt/download.sh
 
-ARG PHABRICATOR_COMMIT=9bfe5585
-ARG ARCANIST_COMMIT=3534d2ba
-ARG LIBPHUTIL_COMMIT=35d0ec2d
+ARG PHABRICATOR_COMMIT=45f421154179e21b7c352fce1472af609e2d6e66
+ARG ARCANIST_COMMIT=d92fa96366c0ed50e4257508148aa75192d4fb1f
+ARG LIBPHUTIL_COMMIT=5fc88a5c73f1b328cd3323d4e997f63197e10f14
 
 WORKDIR /opt
 RUN     bash download.sh phabricator $PHABRICATOR_COMMIT
@@ -72,8 +72,8 @@ RUN     ln -s /usr/lib/git-core/git-http-backend /opt/phabricator/support/bin
 RUN     /opt/phabricator/bin/config set phd.user "root"
 RUN     echo "www-data ALL=(ALL) SETENV: NOPASSWD: /opt/phabricator/support/bin/git-http-backend" >> /etc/sudoers
 
-RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-RUN apt-get install nodejs=9.* -y
+RUN curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+RUN apt-get install nodejs -y
 
 RUN cd phabricator/support/aphlict/server/ && \
     npm install ws@2.x && \

@@ -1,3 +1,3 @@
 <?php
-$_SERVER['HTTPS'] = true;
 
+$_SERVER['HTTPS'] = true;

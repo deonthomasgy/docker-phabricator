@@ -2,7 +2,7 @@
 # Docker image for running https://github.com/phacility/phabricator
 #
 
-FROM    debian:jessie-20190610
+FROM    debian:jessie-20200224
 MAINTAINER  Deon Thomas <deon.thomas.gy@gmail.com>
 
 ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
@@ -36,9 +36,9 @@ RUN     apt-get update && apt-get install -y \
 # repeatable builds use the latest SHA
 ADD     download.sh /opt/download.sh
 
-ARG PHABRICATOR_COMMIT=45f421154179e21b7c352fce1472af609e2d6e66
-ARG ARCANIST_COMMIT=d92fa96366c0ed50e4257508148aa75192d4fb1f
-ARG LIBPHUTIL_COMMIT=5fc88a5c73f1b328cd3323d4e997f63197e10f14
+ARG PHABRICATOR_COMMIT=d0f4554dbeb0179408e54077c3ffbcfafa7b0b98
+ARG ARCANIST_COMMIT=5451d2875221239f8ae151c125c927a1bd43d9ca
+ARG LIBPHUTIL_COMMIT=720c8116845bb9dc19334170e6c0702aa0210c78
 
 WORKDIR /opt
 RUN     bash download.sh phabricator $PHABRICATOR_COMMIT
